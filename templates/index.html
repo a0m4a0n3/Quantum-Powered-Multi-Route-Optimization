@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+        rel="stylesheet" />
+    <!-- Include Chart.js in the <head> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <!-- Static Files (Local Project Scripts and Styles) -->
+    <script src="{{ url_for('static', filename='traffic.js') }}"></script>
+    <link href="{{ url_for('static', filename='traffic.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
+
+    <title>Aman-Final Year Project</title>
+</head>
+
+<body>
+    <div id="navbar">
+        <p id="distance">Distance: Calculating...</p>
+        <p id="time-driving">Driving: Calculating...</p>
+        <p id="cost">Fuel cost: 104 ₹/L</p>
+        <p id="average of bike">Vehicle Average: 50 KM/L</p>
+        <p id="Total-Cost">Total Cost: Calculating...</p>
+    </div>
+    <div id="geocoders">
+        <div id="geocoder1"></div>
+        <div class="container mt-5 position-relative">
+            <button id="toggleButton" class="btn btn-primary">+</button>
+
+            <!-- Extra buttons will appear on the opposite side of the main button -->
+            <div class="extra-buttons">
+                <button class="btn btn-success d-block mb-2" id="circle-btn"
+                    style='background-image: url("static/images/home.png"); background-size: 40px; background-position: center; background-repeat: no-repeat; background-color: white;'></button>
+
+
+                <!-- Button 2 that triggers file input -->
+                <button id="button2" class="btn btn-warning d-block mb-2" style="background-color:white;"><i
+                        style="font-size:25px" class="fa">&#xf07c;</i></button>
+                <!-- Hidden file input -->
+                <input type="file" id="fileInput" accept=".txt" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+    <div id="instructions">
+        <strong>Turn-by-Turn Directions:</strong>
+        <ul id="steps"></ul>
+    </div>
+
+    <!-- Optimization Button -->
+    <button id="optimize-btn">Optimize Route</button>
+    <!-- Move Button -->
+    <button id="move-btn">Drive</button>
+
+    <button id="status" type="button" class="btn btn-primary" data-toggle="modal"
+        data-target="#exampleModalCenter">Status</button>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Time vs Cost</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="noDataMessage" style="display: none; text-align: center; font-size: 18px; color: red;">
+                        No Data Available
+                    </div>
+                    <canvas id="costTimeChart"></canvas> <!-- Line Graph Here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
